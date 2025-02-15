@@ -14,23 +14,21 @@ class Player(CircleShape):
 
         # in the player class
     def triangle(self):
+        # Calculate direction vector based on rotation
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
-        right = pygame.Vector2(0, 1).rotate(self.rotation + 90) * self.radius / 1.5
-        a = self.position + forward * self.radius
-        b = self.position - forward * self.radius - right
+        right = pygame.Vector2(0, 1).rotate(self.rotation + 90) * self.radius * 0.8
         
-        c = self.position - forward * self.radius + right
-        # Puntos adicionales para detalles
+        # Create the three points of the triangle
+        nose = self.position + forward * self.radius * 0.5
+        left = self.position - forward * self.radius * 0.5 - right
+        right = self.position - forward * self.radius * 0.5 + right
         
-        
+        return [nose, left, right]
 
-        return [a, b, c]  
-        
+    def draw(self, screen):
+        pygame.draw.polygon(screen, 'green', self.triangle(), 2)
 
-        
-    def draw(self,screen):
-              
-        pygame.draw.polygon(screen,'blue',self.triangle(),2)
+
          
 
     def rotate(self,dt):

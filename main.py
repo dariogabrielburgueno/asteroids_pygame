@@ -1,4 +1,5 @@
 import pygame
+
 from constants import *
 from player import *
 from circleshape import *
@@ -30,6 +31,7 @@ def main():
     textRect = text.get_rect()
     textRect.center = (600, 200/6 )
     contador_asteroide=0
+    bg_image = pygame.image.load('back.jpg')
 
     def game_over_screen(screen):
         
@@ -61,7 +63,8 @@ def main():
                 pygame.quit()
                 SystemExit()
        # jugador.update(dt)
-        screen.fill((0,0,0))
+       # screen.fill((0,0,0))
+        screen.blit(bg_image,(0,0))
         screen.blit(text, textRect)
         #jugador.draw(screen)
         updatable.update(dt)
