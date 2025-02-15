@@ -31,11 +31,35 @@ def main():
     textRect.center = (600, 200/6 )
     contador_asteroide=0
 
+    def game_over_screen(screen):
+        
+        font = pygame.font.Font('freesansbold.ttf', 30)
+        game_over = font.render("GAME OVER - Press S to continue", True, (255, 0, 0))
+        pos = (SCREEN_WIDTH//2 - game_over.get_width()//2, SCREEN_HEIGHT//2)
+        
+        screen.fill((0, 0, 0))
+        screen.blit(game_over, pos)
+        pygame.display.flip()
+        
+        waiting = True
+        while waiting:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    SystemExit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_s:
+                        return True
+                    elif event.key == pygame.K_n:
+                        pygame.quit()
+                        SystemExit()
+
 
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                return
+                pygame.quit()
+                SystemExit()
        # jugador.update(dt)
         screen.fill((0,0,0))
         screen.blit(text, textRect)
@@ -43,9 +67,13 @@ def main():
         updatable.update(dt)
         for ast in asteroids:
             if ast.collision(jugador)==True:
+                if game_over_screen(screen):
+                    # Resetea la posición del jugador
+                    jugador.position.x = SCREEN_WIDTH/2
+                    jugador.position.y = SCREEN_HEIGHT/2
 
                 
-                raise SystemExit("Game Over")
+                #raise SystemExit("Game Over")
         
         for drawa in drawable:
             drawa.draw(screen)
